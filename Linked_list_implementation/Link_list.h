@@ -26,6 +26,9 @@ public:
 	}
 	void append(int data);
 	void prepend(int data);
+	void insert(int index, int data);
+	void remove(int index);
+	void print();
 
 	Node* head = NULL;
 	Node* tail = NULL;
@@ -58,5 +61,49 @@ void Linked_list::prepend(int data) {
 	size++;
 }
 
+void Linked_list::insert(int index, int data) {
+	if (index == 0) {
+		this->prepend(data);
+		++size;
+		return;
+	}
+	Node* ite = head;
+	int i = 0;
+	while (i < index-1) {
+		ite = ite->next;
+		++i;
+	}
+	// ite is currently pointed to node before insert location
+	Node* new_node = new Node(data);
+	new_node->next = ite->next;
+	ite->next = new_node;
+	++size;
+}
+
+void Linked_list::remove(int index) {
+	if (index == 0) {
+		head = head->next;
+		--size;
+		return;
+	}
+	Node* ite = head;
+	int i = 0;
+	while (i < index - 1) {
+		ite = ite->next;
+		++i;
+	}
+	// ite is currently pointed to node before delete location
+	ite->next = ite->next->next;
+	--size;
+}
+
+void Linked_list::print() {
+	Node* ite = head;
+	while (ite!=NULL) {
+		cout << ite->data << "-->";
+		ite = ite->next;
+	}
+	cout << endl;
+}
 
 #endif
